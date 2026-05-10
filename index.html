@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Anis Chess Academy - Master Chess with world-class online coaching. Beginner to Advanced programs, 1-on-1 coaching, and tournament preparation.">
+  <meta name="keywords" content="chess academy, online chess coaching, learn chess, chess training, Anis chess">
+  <meta property="og:title" content="Anis Chess Academy - Master Chess Online">
+  <meta property="og:description" content="Train like a champion from anywhere in the world with Anis Chess Academy.">
+  <title>Anis Chess Academy | Master Chess Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --white: #f5f0e8;
+      --white2: #ede8df;
+      --gold: #c9a84c;
+      --gold2: #e8c96a;
+      --gold3: #a07830;
+      --gray: #888;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Josefin Sans', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: none
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+      mix-blend-mode: difference
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s, left 0.12s ease-out, top 0.12s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+      opacity: 0.5
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition)
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 1rem 5%
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    .nav-logo span {
+      color: var(--white);
+      font-weight: 300
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none
+    }
+
+    .nav-links a {
+      color: var(--white2);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.3s;
+      position: relative
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s
+    }
+
+    .nav-links a:hover {
+      color: var(--gold)
+    }
+
+    .nav-links a:hover::after {
+      width: 100%
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black);
+      padding: 0.6rem 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)
+    }
+
+    .nav-cta:hover {
+      background: var(--gold2);
+      transform: translateY(-2px)
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--white);
+      transition: var(--transition)
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 5%
+    }
+
+    .chess-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04
+    }
+
+    .chess-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      height: 100%;
+      width: 100%
+    }
+
+    .chess-cell {
+      transition: opacity 0.5s
+    }
+
+    .chess-cell.dark {
+      background: var(--white)
+    }
+
+    .chess-cell.light {
+      background: transparent
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      right: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+      pointer-events: none
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      color: var(--white2);
+      opacity: 0.8;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      padding: 1rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+      display: inline-block
+    }
+
+    .btn-primary:hover {
+      background: var(--gold2);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(201, 168, 76, 0.3)
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(201, 168, 76, 0.5);
+      color: var(--gold);
+      padding: 1rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(201, 168, 76, 0.08);
+      transform: translateY(-3px)
+    }
+
+    .hero-piece {
+      position: absolute;
+      right: 5%;
+      bottom: 10%;
+      font-size: clamp(8rem, 18vw, 18rem);
+      opacity: 0.06;
+      filter: grayscale(1);
+      line-height: 1;
+      animation: float 8s ease-in-out infinite;
+      user-select: none
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 4rem;
+      right: 5%;
+      display: flex;
+      gap: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.1s forwards
+    }
+
+    .stat {
+      text-align: center
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      line-height: 1
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.3rem
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.4;
+      animation: fadeUp 1s 1.5s forwards
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 2s ease-in-out infinite
+    }
+
+    .scroll-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray)
+    }
+
+    /* SECTION COMMONS */
+    section {
+      padding: 7rem 5%
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+      opacity: 0.5
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s, transform 0.8s
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0.3
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      margin-top: 4rem
+    }
+
+    .about-image-wrap {
+      position: relative
+    }
+
+    .about-image-frame {
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .about-image-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.05), transparent 60%)
+    }
+
+    .about-chess-icon {
+      font-size: 8rem;
+      opacity: 0.15;
+      position: absolute
+    }
+
+    .trainer-silhouette {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+      z-index: 1
+    }
+
+    .about-image-accent {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5
+    }
+
+    .about-image-accent2 {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      width: 100px;
+      height: 100px;
+      border-bottom: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 2rem;
+      right: -2rem;
+      background: var(--gold);
+      color: var(--black);
+      padding: 1rem 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      z-index: 2
+    }
+
+    .about-badge span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 0.2rem
+    }
+
+    .about-text p {
+      font-size: 0.9rem;
+      line-height: 2;
+      color: var(--white2);
+      opacity: 0.85;
+      margin-bottom: 1.5rem
+    }
+
+    .achievements {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem
+    }
+
+    .achievement-item {
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: var(--transition)
+    }
+
+    .achievement-item:hover {
+      border-color: rgba(201, 168, 76, 0.4);
+      transform: translateX(5px)
+    }
+
+    .ach-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0
+    }
+
+    .ach-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: var(--white2);
+      line-height: 1.4
+    }
+
+    /* COURSES */
+    #courses {
+      background: var(--black)
+    }
+
+    .courses-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem
+    }
+
+    .course-card {
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      padding: 2.5rem;
+      position: relative;
+      transition: var(--transition);
+      overflow: hidden
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s
+    }
+
+    .course-card:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5)
+    }
+
+    .course-card:hover::before {
+      transform: scaleX(1)
+    }
+
+    .course-card.featured {
+      border-color: rgba(201, 168, 76, 0.4);
+      background: linear-gradient(135deg, var(--dark) 0%, rgba(201, 168, 76, 0.05) 100%)
+    }
+
+    .course-badge {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--black);
+      padding: 0.3rem 0.8rem;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-weight: 700
+    }
+
+    .course-badge.featured-badge {
+      background: var(--gold)
+    }
+
+    .course-level {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem
+    }
+
+    .course-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem
+    }
+
+    .course-desc {
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: var(--white2);
+      opacity: 0.75;
+      margin-bottom: 1.5rem
+    }
+
+    .course-features {
+      list-style: none;
+      margin-bottom: 2rem
+    }
+
+    .course-features li {
+      font-size: 0.78rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--white2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem
+    }
+
+    .course-features li::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.5rem;
+      flex-shrink: 0
+    }
+
+    .course-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .course-price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold)
+    }
+
+    .course-price span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block
+    }
+
+    .course-duration {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-align: right
+    }
+
+    .course-chess-icon {
+      position: absolute;
+      bottom: -1rem;
+      right: -1rem;
+      font-size: 6rem;
+      opacity: 0.04
+    }
+
+    .coaching-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem
+    }
+
+    .coaching-card {
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      padding: 2.5rem;
+      transition: var(--transition)
+    }
+
+    .coaching-card:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateY(-5px)
+    }
+
+    .coaching-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem
+    }
+
+    .coaching-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem
+    }
+
+    .coaching-desc {
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--white2);
+      opacity: 0.75
+    }
+
+    /* FEATURES */
+    #features {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem
+    }
+
+    .feature-card {
+      padding: 2rem;
+      border: 1px solid rgba(201, 168, 76, 0.08);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s
+    }
+
+    .feature-card:hover {
+      border-color: rgba(201, 168, 76, 0.25);
+      transform: translateY(-5px)
+    }
+
+    .feature-card:hover::after {
+      opacity: 1
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      display: block
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem
+    }
+
+    .feature-desc {
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: var(--white2);
+      opacity: 0.7
+    }
+
+    /* BOOKING */
+    #booking {
+      background: var(--black);
+      position: relative
+    }
+
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      align-items: start;
+      margin-top: 4rem
+    }
+
+    .booking-info h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem
+    }
+
+    .booking-info p {
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--white2);
+      opacity: 0.8;
+      margin-bottom: 2rem
+    }
+
+    .booking-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem
+    }
+
+    .booking-perks li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: var(--white2)
+    }
+
+    .booking-perks li::before {
+      content: '♟';
+      color: var(--gold);
+      font-size: 1rem;
+      flex-shrink: 0
+    }
+
+    .booking-form {
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 3rem
+    }
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem
+    }
+
+    .form-sub {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      color: var(--white);
+      padding: 0.9rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+      appearance: none;
+      -webkit-appearance: none
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold)
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--gray);
+      opacity: 0.6
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      padding: 1rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)
+    }
+
+    .form-submit:hover {
+      background: var(--gold2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 168, 76, 0.3)
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-size: 1.5rem
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none
+    }
+
+    .toast {
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 1rem 1.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      max-width: 320px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: all;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1)
+    }
+
+    .toast.success {
+      border-color: rgba(100, 200, 130, 0.5)
+    }
+
+    .toast.error {
+      border-color: rgba(220, 80, 80, 0.5)
+    }
+
+    .toast-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0
+    }
+
+    .toast-msg {
+      color: var(--white2);
+      line-height: 1.5
+    }
+
+    /* BUTTON LOADING */
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important
+    }
+
+    .btn-spin {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-top-color: var(--black);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 0.5rem;
+      vertical-align: middle
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* COUNTER */
+    .stat-num {
+      min-width: 3ch;
+      display: inline-block
+    }
+
+    /* TESTIMONIALS */
+    #testimonials {
+      background: var(--dark);
+      overflow: hidden;
+      position: relative
+    }
+
+    #testimonials::before {
+      content: '❝';
+      position: absolute;
+      top: -2rem;
+      left: 3%;
+      font-size: 20rem;
+      color: var(--gold);
+      opacity: 0.03;
+      font-family: serif;
+      line-height: 1
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem
+    }
+
+    .testimonial-card {
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      padding: 2.5rem;
+      transition: var(--transition);
+      position: relative
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateY(-5px)
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.2em
+    }
+
+    .testimonial-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--white2);
+      margin-bottom: 2rem
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold3), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--black);
+      flex-shrink: 0
+    }
+
+    .author-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em
+    }
+
+    .author-info {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.2rem
+    }
+
+    /* GALLERY */
+    #gallery {
+      background: var(--black)
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 200px);
+      gap: 8px;
+      margin-top: 3rem
+    }
+
+    .gallery-item {
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      opacity: 0.6;
+      transition: var(--transition);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer
+    }
+
+    .gallery-item:hover {
+      opacity: 1;
+      border-color: rgba(201, 168, 76, 0.4);
+      transform: scale(1.02);
+      z-index: 2
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1
+    }
+
+    .gallery-item.large {
+      grid-column: span 2;
+      grid-row: span 2
+    }
+
+    .gallery-item.tall {
+      grid-row: span 2
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white2)
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0)
+    }
+
+    /* BLOG */
+    #blog {
+      background: var(--dark)
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem
+    }
+
+    .blog-card {
+      background: var(--dark2);
+      border: 1px solid rgba(201, 168, 76, 0.08);
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer
+    }
+
+    .blog-card:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateY(-5px)
+    }
+
+    .blog-image {
+      height: 160px;
+      background: var(--dark3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+      position: relative;
+      overflow: hidden
+    }
+
+    .blog-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.08), transparent)
+    }
+
+    .blog-content {
+      padding: 1.5rem
+    }
+
+    .blog-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem
+    }
+
+    .blog-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s
+    }
+
+    .blog-card:hover .blog-title {
+      color: var(--gold)
+    }
+
+    .blog-meta {
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 0.05em
+    }
+
+    /* NEWSLETTER */
+    .newsletter-strip {
+      background: var(--gold);
+      padding: 4rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap
+    }
+
+    .newsletter-strip h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--black);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      max-width: 500px
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: none;
+      background: rgba(0, 0, 0, 0.15);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(0, 0, 0, 0.5)
+    }
+
+    .newsletter-btn {
+      background: var(--black);
+      color: var(--gold);
+      padding: 1rem 2rem;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap
+    }
+
+    .newsletter-btn:hover {
+      background: var(--dark2)
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--black)
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      margin-top: 4rem
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3rem
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      transition: var(--transition)
+    }
+
+    .contact-item:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateX(5px)
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center
+    }
+
+    .contact-detail .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem
+    }
+
+    .contact-detail .value {
+      font-size: 0.9rem;
+      color: var(--white2)
+    }
+
+    .contact-detail .value a {
+      color: var(--white2);
+      text-decoration: none;
+      transition: color 0.3s
+    }
+
+    .contact-detail .value a:hover {
+      color: var(--gold)
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--white2);
+      transition: var(--transition)
+    }
+
+    .social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.08);
+      transform: translateY(-3px)
+    }
+
+    .contact-form-wrap {
+      background: var(--dark);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 3rem
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      padding: 4rem 5% 2rem
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem
+    }
+
+    .footer-brand .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--gold);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 1rem
+    }
+
+    .footer-brand p {
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: var(--gray);
+      max-width: 240px
+    }
+
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      font-weight: 600
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem
+    }
+
+    .footer-col ul li a {
+      font-size: 0.8rem;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.3s;
+      letter-spacing: 0.05em
+    }
+
+    .footer-col ul li a:hover {
+      color: var(--white2)
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--gray)
+    }
+
+    .footer-bottom a {
+      color: var(--gold);
+      text-decoration: none
+    }
+
+    .chess-line {
+      display: flex;
+      gap: 0;
+      margin: 2rem 0;
+      opacity: 0.08
+    }
+
+    .chess-line span {
+      flex: 1;
+      height: 3px;
+      background: var(--white)
+    }
+
+    .chess-line span:nth-child(odd) {
+      background: transparent
+    }
+
+    /* CHESS BOARD WIDGET */
+    #chessboard-section {
+      background: var(--dark2);
+      padding: 5rem 5%
+    }
+
+    .board-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+      margin-top: 3rem
+    }
+
+    .chess-board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      width: min(400px, 90vw);
+      height: min(400px, 90vw);
+      border: 2px solid rgba(201, 168, 76, 0.4);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5)
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      cursor: pointer;
+      transition: background 0.2s;
+      user-select: none
+    }
+
+    .cell.white {
+      background: #e8d5b0
+    }
+
+    .cell.black {
+      background: #8b6635
+    }
+
+    .cell.selected {
+      background: rgba(201, 168, 76, 0.6) !important
+    }
+
+    .cell.possible {
+      background: rgba(100, 200, 100, 0.4) !important
+    }
+
+    .board-info {
+      max-width: 300px
+    }
+
+    .board-info h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 1rem
+    }
+
+    .board-info p {
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--white2);
+      opacity: 0.8;
+      margin-bottom: 1.5rem
+    }
+
+    .board-status {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      min-height: 1.5rem
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--dark);
+      z-index: 999;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-left: 1px solid rgba(201, 168, 76, 0.15)
+    }
+
+    .mobile-menu.open {
+      right: 0
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem
+    }
+
+    .mobile-menu ul li a {
+      font-size: 1.5rem;
+      font-family: var(--font-display);
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s
+    }
+
+    .mobile-menu ul li a:hover {
+      color: var(--gold)
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(3deg)
+      }
+    }
+
+    @keyframes scrollLine {
+
+      0%,
+      100% {
+        opacity: 0.4
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.05)
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% center
+      }
+
+      100% {
+        background-position: 200% center
+      }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .courses-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 180px)
+      }
+
+      .gallery-item.large,
+      .gallery-item.tall {
+        grid-column: span 1;
+        grid-row: span 1
+      }
+    }
+
+    @media(max-width:768px) {
+
+      .nav-links,
+      .nav-cta {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .hero-stats {
+        display: none
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr
+      }
+
+      .courses-intro {
+        grid-template-columns: 1fr
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr
+      }
+
+      .coaching-section {
+        grid-template-columns: 1fr
+      }
+
+      .booking-wrap {
+        grid-template-columns: 1fr
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .newsletter-strip {
+        flex-direction: column;
+        text-align: center
+      }
+
+      .newsletter-form {
+        width: 100%;
+        max-width: 100%
+      }
+
+      body {
+        cursor: auto
+      }
+
+      .cursor,
+      .cursor-follower {
+        display: none
+      }
+
+      .about-badge {
+        right: 0
+      }
+
+      .form-row {
+        grid-template-columns: 1fr
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto
+      }
+    }
+
+    @media(max-width:480px) {
+      section {
+        padding: 4rem 4%
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- OVERLAY & MOBILE MENU -->
+  <div class="overlay" id="overlay" onclick="closeMobileMenu()"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+      <li><a href="#courses" onclick="closeMobileMenu()">Courses</a></li>
+      <li><a href="#features" onclick="closeMobileMenu()">Features</a></li>
+      <li><a href="#booking" onclick="closeMobileMenu()">Book Demo</a></li>
+      <li><a href="#testimonials" onclick="closeMobileMenu()">Reviews</a></li>
+      <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Anis <span>Chess Academy</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#booking">Book Demo</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#booking" class="nav-cta">Free Demo</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span id="h1"></span><span id="h2"></span><span id="h3"></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="chess-bg" aria-hidden="true">
+      <div class="chess-grid" id="chessGrid"></div>
+    </div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Est. 2018 · World-Class Chess Training</p>
+      <h1 class="hero-title">Master Chess with<br><em>Anis Chess Academy</em></h1>
+      <p class="hero-sub">Train like a champion from anywhere in the world. Personalized coaching, structured programs,
+        and expert guidance from beginner to grandmaster level.</p>
+      <div class="hero-buttons">
+        <a href="#booking" class="btn-primary">Join Now</a>
+        <a href="#booking" class="btn-outline">Book a Free Demo</a>
+      </div>
+    </div>
+    <div class="hero-piece" aria-hidden="true">♚</div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Students</span></div>
+      <div class="stat"><span class="stat-num">40+</span><span class="stat-label">Countries</span></div>
+      <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Years Exp</span></div>
+      <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Satisfaction</span></div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-eyebrow reveal">About the Academy</div>
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <div class="about-image-frame">
+          <div class="about-chess-icon">♛</div>
+          <svg viewBox="0 0 300 400" width="100%" height="100%" style="position:relative;z-index:1">
+            <defs>
+              <linearGradient id="personGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#c9a84c;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#a07830;stop-opacity:0.1" />
+              </linearGradient>
+            </defs>
+            <ellipse cx="150" cy="120" rx="60" ry="65" fill="url(#personGrad)" stroke="rgba(201,168,76,0.2)"
+              stroke-width="1" />
+            <path d="M50 400 Q80 280 150 260 Q220 280 250 400 Z" fill="url(#personGrad)" stroke="rgba(201,168,76,0.2)"
+              stroke-width="1" />
+            <text x="150" y="135" text-anchor="middle" font-size="60" opacity="0.3">♟</text>
+          </svg>
+          <div class="about-image-accent" aria-hidden="true"></div>
+          <div class="about-image-accent2" aria-hidden="true"></div>
+        </div>
+        <div class="about-badge"><span>12+</span>Years of Mastery</div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-eyebrow">Meet Your Coach</div>
+        <div class="divider"></div>
+        <p>Anis is an internationally recognized chess coach and FIDE-rated player with over 12 years of competitive and
+          coaching experience. Having trained students across 40+ countries, he brings a unique blend of classical
+          theory and modern preparation techniques.</p>
+        <p>His teaching philosophy centers on building deep positional understanding, tactical sharpness, and
+          psychological resilience — the three pillars of champion-level chess. Every student receives a customized
+          roadmap tailored to their strengths and goals.</p>
+        <div class="achievements">
+          <div class="achievement-item"><span class="ach-icon">🏆</span><span class="ach-text">National Champion 2012 &
+              2015</span></div>
+          <div class="achievement-item"><span class="ach-icon">🎖️</span><span class="ach-text">FIDE Certified
+              Coach</span></div>
+          <div class="achievement-item"><span class="ach-icon">🌍</span><span class="ach-text">Students in 40+
+              countries</span></div>
+          <div class="achievement-item"><span class="ach-icon">♟</span><span class="ach-text">500+ students
+              trained</span></div>
+          <div class="achievement-item"><span class="ach-icon">📚</span><span class="ach-text">Author of 3 chess
+              books</span></div>
+          <div class="achievement-item"><span class="ach-icon">🎓</span><span class="ach-text">Chess Psychology
+              PhD</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses">
+    <div class="courses-intro">
+      <div class="reveal">
+        <div class="section-eyebrow">Programs & Pricing</div>
+        <h2 class="section-title">Choose Your <em>Path to Mastery</em></h2>
+      </div>
+      <div class="reveal">
+        <p style="font-size:0.85rem;line-height:2;color:var(--white2);opacity:0.8">From your first move to tournament
+          preparation — we have a program for every stage of your chess journey. All courses include access to our
+          exclusive study materials and game analysis platform.</p>
+      </div>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card reveal">
+        <span class="course-badge">Beginner</span>
+        <div class="course-level">Level 01</div>
+        <div class="course-name">Foundations of Chess</div>
+        <p class="course-desc">Learn the rules, basic tactics, and fundamental strategies. Perfect for complete
+          beginners or those who want to solidify their foundation.</p>
+        <ul class="course-features">
+          <li>Chess rules & piece movements</li>
+          <li>Basic tactics (forks, pins, skewers)</li>
+          <li>Opening principles</li>
+          <li>Simple endgame techniques</li>
+          <li>Weekly puzzle assignments</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">₹1500<span>per month</span></div>
+          <div class="course-duration">8 weeks<br><span style="color:var(--gray)">2 sessions/week</span></div>
+        </div>
+        <div class="course-chess-icon">♙</div>
+      </div>
+      <div class="course-card featured reveal">
+        <span class="course-badge featured-badge">Most Popular</span>
+        <div class="course-level">Level 02</div>
+        <div class="course-name">Strategic Mastery</div>
+        <p class="course-desc">Develop deep positional understanding, complex tactics, and a complete opening
+          repertoire. For players rated 800–1500 Elo.</p>
+        <ul class="course-features">
+          <li>Advanced tactical patterns</li>
+          <li>Positional play & pawn structure</li>
+          <li>Full opening repertoire</li>
+          <li>Middlegame strategy</li>
+          <li>Endgame mastery</li>
+          <li>Game analysis sessions</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">₹3000<span>per month</span></div>
+          <div class="course-duration">12 weeks<br><span style="color:var(--gray)">3 sessions/week</span></div>
+        </div>
+        <div class="course-chess-icon">♘</div>
+      </div>
+      <div class="course-card reveal">
+        <span class="course-badge">Advanced</span>
+        <div class="course-level">Level 03</div>
+        <div class="course-name">Elite Tournament Play</div>
+        <p class="course-desc">Elite-level preparation for competitive players targeting 1800+ Elo, national
+          tournaments, and FIDE titles.</p>
+        <ul class="course-features">
+          <li>Deep opening theory</li>
+          <li>Grandmaster game analysis</li>
+          <li>Tournament psychology</li>
+          <li>Complex endgame technique</li>
+          <li>Personalized weakness analysis</li>
+          <li>Live tournament support</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">₹5000<span>per month</span></div>
+          <div class="course-duration">16 weeks<br><span style="color:var(--gray)">4 sessions/week</span></div>
+        </div>
+        <div class="course-chess-icon">♛</div>
+      </div>
+    </div>
+    <div class="coaching-section reveal">
+      <div class="coaching-card">
+        <div class="coaching-icon">👤</div>
+        <div class="coaching-title">1-on-1 Private Coaching</div>
+        <p class="coaching-desc">Intensive personalized sessions directly with Anis. Completely customized to your
+          style, goals, and schedule. Includes detailed game analysis, custom opening repertoire, and priority support
+          between sessions. <strong style="color:var(--gold)">From $120/session.</strong></p>
+      </div>
+      <div class="coaching-card">
+        <div class="coaching-icon">👥</div>
+        <div class="coaching-title">Group Classes</div>
+        <p class="coaching-desc">Learn alongside peers in structured group settings. Maximum 8 students per group
+          ensures personalized attention. Great for motivation, friendly competition, and collaborative learning.
+          <strong style="color:var(--gold)">From $35/session.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-eyebrow">Why Anis Chess Academy</div>
+      <h2 class="section-title">Everything You Need to <em>Excel</em></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon">🎥</span>
+        <div class="feature-title">Live Online Classes</div>
+        <p class="feature-desc">Real-time interactive sessions via video conference. Engage with your coach live, ask
+          questions, and get instant feedback on your moves.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🗺️</span>
+        <div class="feature-title">Personalized Training Plans</div>
+        <p class="feature-desc">Every student receives a custom-built curriculum based on their current level, learning
+          style, and specific goals.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🔍</span>
+        <div class="feature-title">Deep Game Analysis</div>
+        <p class="feature-desc">Detailed post-game analysis of your actual games using top engine evaluation combined
+          with human insight and coaching.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🏆</span>
+        <div class="feature-title">Tournament Preparation</div>
+        <p class="feature-desc">Specialized preparation programs for rated tournaments, including opening prep, opponent
+          analysis, and mental conditioning.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">📱</span>
+        <div class="feature-title">Study Materials & App</div>
+        <p class="feature-desc">Access to our exclusive library of puzzles, videos, annotated games, and opening
+          databases — available 24/7.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">💬</span>
+        <div class="feature-title">Community & Support</div>
+        <p class="feature-desc">Join our private student community. Practice games, peer discussion, monthly
+          tournaments, and direct coach access.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">📊</span>
+        <div class="feature-title">Progress Tracking</div>
+        <p class="feature-desc">Visual dashboards tracking your rating improvement, tactical accuracy, and areas of
+          development over time.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-title">Flexible Scheduling</div>
+        <p class="feature-desc">Sessions available across all major time zones. Morning, afternoon, or evening — we fit
+          your lifestyle, not the other way around.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE CHESS BOARD -->
+  <section id="chessboard-section">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 0">
+      <div class="section-eyebrow">Practice Corner</div>
+      <h2 class="section-title">Try the <em>Interactive Board</em></h2>
+    </div>
+    <div class="board-wrap">
+      <div>
+        <div class="chess-board" id="board" role="grid" aria-label="Interactive chess board"></div>
+      </div>
+      <div class="board-info reveal">
+        <h3>Practice Anytime</h3>
+        <p>Use our interactive board to practice positions, explore openings, and get a feel for the game. Click a piece
+          to see its possible moves highlighted in green.</p>
+        <p class="board-status" id="boardStatus">Click any piece to start</p>
+        <button onclick="resetBoard()"
+          style="margin-top:1rem;background:transparent;border:1px solid rgba(201,168,76,0.4);color:var(--gold);padding:0.8rem 2rem;font-family:var(--font-body);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:var(--transition)"
+          onmouseover="this.style.background='rgba(201,168,76,0.1)'"
+          onmouseout="this.style.background='transparent'">Reset Board</button>
+        <br><br>
+        <a href="#booking" class="btn-primary" style="font-size:0.72rem">Start Learning With Anis ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking">
+    <div class="booking-wrap">
+      <div class="reveal">
+        <div class="section-eyebrow">Book Your Spot</div>
+        <h2 class="section-title">Start with a <em>Free Demo</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:0.85rem;line-height:2;color:var(--white2);opacity:0.8;margin-bottom:2rem">Your first session
+          is completely free. Meet Anis, discuss your goals, and experience the Anis Chess Academy difference — no
+          commitment required.</p>
+        <ul class="booking-perks">
+          <li>30-minute personalized session with Anis</li>
+          <li>Assessment of your current skill level</li>
+          <li>Custom learning roadmap for your goals</li>
+          <li>No credit card required</li>
+          <li>Available 7 days a week</li>
+        </ul>
+      </div>
+      <div class="booking-form reveal">
+        <div class="form-title">Book Your Free Demo</div>
+        <div class="form-sub">Spots fill up fast — reserve yours today</div>
+        <form id="bookingForm" onsubmit="submitBooking(event)" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="fname" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="country">Country</label>
+              <select id="country" name="country" required style="color:var(--white2)">
+                <option value="" style="background:var(--dark2)">Select country</option>
+                <option style="background:var(--dark2)">India</option>
+                <option style="background:var(--dark2)">United States</option>
+                <option style="background:var(--dark2)">United Kingdom</option>
+                <option style="background:var(--dark2)">Germany</option>
+                <option style="background:var(--dark2)">France</option>
+                <option style="background:var(--dark2)">Russia</option>
+                <option style="background:var(--dark2)">China</option>
+                <option style="background:var(--dark2)">Brazil</option>
+                <option style="background:var(--dark2)">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="level">Skill Level</label>
+              <select id="level" name="level" required style="color:var(--white2)">
+                <option value="" style="background:var(--dark2)">Select level</option>
+                <option style="background:var(--dark2)">Complete Beginner</option>
+                <option style="background:var(--dark2)">Beginner (below 800)</option>
+                <option style="background:var(--dark2)">Intermediate (800–1500)</option>
+                <option style="background:var(--dark2)">Advanced (1500–1800)</option>
+                <option style="background:var(--dark2)">Expert (1800+)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="goals">Your Chess Goals (optional)</label>
+            <textarea id="goals" name="goals" placeholder="I want to improve my endgame and reach 1500 Elo..."
+              style="height:80px"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Book My Free Demo Session →</button>
+        </form>
+        <div class="success-msg" id="successMsg">✓ Booked! Anis will contact you within 24 hours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div style="text-align:center" class="reveal">
+      <div class="section-eyebrow">Student Stories</div>
+      <h2 class="section-title">What Our <em>Students Say</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Within 6 months of training with Anis, my rating jumped from 950 to 1340. His
+          method of breaking down positions is unlike anything I've seen online."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RK</div>
+          <div>
+            <div class="author-name">Rahul Kumar</div>
+            <div class="author-info">India · +390 Elo in 6 months</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Anis doesn't just teach chess — he teaches you how to think. My son went from
+          casual player to winning his school district championship in one year."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SM</div>
+          <div>
+            <div class="author-name">Sarah Mitchell</div>
+            <div class="author-info">USA · Parent of student</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The tournament prep module was exceptional. Anis analyzed my opponent's games and
+          prepared a specific opening plan. I won my first rated tournament!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AH</div>
+          <div>
+            <div class="author-name">Ahmad Hassan</div>
+            <div class="author-info">UAE · National U18 Champion</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I tried 4 other coaches before Anis. None of them could explain positional concepts
+          with such clarity. Best investment I've made in my chess career."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">LP</div>
+          <div>
+            <div class="author-name">Lucas Petrov</div>
+            <div class="author-info">Germany · 1800 → 2050 Elo</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"As a complete beginner at 35, I was nervous. Anis made learning chess fun and
+          accessible. I'm now playing in local club tournaments and loving every game!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">EO</div>
+          <div>
+            <div class="author-name">Emma O'Brien</div>
+            <div class="author-info">Ireland · Adult learner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The flexible scheduling is a lifesaver. Being in Tokyo, I can train at 7am before
+          work. Anis is always prepared and the sessions are dense with value."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">KT</div>
+          <div>
+            <div class="author-name">Kenji Tanaka</div>
+            <div class="author-info">Japan · 2 years student</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="reveal">
+      <div class="section-eyebrow">Gallery</div>
+      <h2 class="section-title">Moments of <em>Excellence</em></h2>
+    </div>
+    <div class="gallery-grid" style="margin-top:3rem">
+      <div class="gallery-item large reveal" style="background:linear-gradient(135deg,#1a1a1a,#222);font-size:5rem">
+        <img src="/assets/image1.jpg" alt="">
+        <div class="gallery-caption">Academy championship 2024</div>
+      </div>
+      <div class="gallery-item reveal" style="background:linear-gradient(135deg,#111,#1a1a1a)">
+        <img src="/assets/image2.jpg" alt="">
+        <div class="gallery-caption">Tournament winners</div>
+      </div>
+      <div class="gallery-item reveal" style="background:linear-gradient(135deg,#1a1a1a,#111)">
+        <img src="/assets/image3.jpg" alt="">
+        <div class="gallery-caption">Online group session</div>
+      </div>
+      <div class="gallery-item tall reveal" style="background:linear-gradient(135deg,#111,#222)">
+        <img src="/assets/image4.jpg" alt="">
+        <div class="gallery-caption">Study materials</div>
+      </div>
+      <div class="gallery-item reveal" style="background:linear-gradient(135deg,#222,#1a1a1a)">
+        <img src="/assets/image6.jpg" alt="">
+        <div class="gallery-caption">Position analysis</div>
+      </div>
+      <div class="gallery-item reveal" style="background:linear-gradient(135deg,#1a1a1a,#111)">
+        <img src="/assets/image7.jpg" alt="">
+        <div class="gallery-caption">Students worldwide</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="section-eyebrow">Chess Tips & Insights</div>
+        <h2 class="section-title">From the <em>Academy Blog</em></h2>
+      </div>
+      <a href="#blog" class="btn-outline" style="margin-bottom:1rem">View All Posts</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-image" style="background:linear-gradient(135deg,#1a1a1a,#222)">♟</div>
+        <div class="blog-content">
+          <div class="blog-tag">Opening Theory</div>
+          <div class="blog-title">Why the Sicilian Defence is Still the Best Weapon for Black in 2025</div>
+          <div class="blog-meta">Anis · March 15, 2025 · 8 min read</div>
+        </div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-image" style="background:linear-gradient(135deg,#111,#1a1a1a)">♞</div>
+        <div class="blog-content">
+          <div class="blog-tag">Tactics</div>
+          <div class="blog-title">5 Tactical Patterns Every Intermediate Player Must Know</div>
+          <div class="blog-meta">Anis · February 28, 2025 · 12 min read</div>
+        </div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-image" style="background:linear-gradient(135deg,#1a1a1a,#111)">♚</div>
+        <div class="blog-content">
+          <div class="blog-tag">Psychology</div>
+          <div class="blog-title">Tournament Psychology: How to Stay Calm and Win Under Pressure</div>
+          <div class="blog-meta">Anis · February 10, 2025 · 10 min read</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter-strip reveal">
+    <h3>♟ Get Weekly Chess Tips</h3>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Enter your email address" id="nlEmail">
+      <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Let's Start Your <em>Journey</em></h2>
+        <div class="divider"></div>
+        <div class="contact-items">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div class="contact-detail">
+              <div class="label">Email</div>
+              <div class="value"><a href="mailto:anissikandar2@gmail.com">anissikandar2@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💬</span>
+            <div class="contact-detail">
+              <div class="label">WhatsApp</div>
+              <div class="value"><a href="https://wa.me/918235034962">+91 8235034962</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">🕐</span>
+            <div class="contact-detail">
+              <div class="label">Response Time</div>
+              <div class="value">Within 24 hours</div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="margin-bottom:1rem;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)">
+          Follow Us</div>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="YouTube">▶</a>
+          <a href="#" class="social-link" aria-label="Instagram">◈</a>
+          <a href="#" class="social-link" aria-label="Twitter/X">✕</a>
+          <a href="#" class="social-link" aria-label="Chess.com">♟</a>
+          <a href="#" class="social-link" aria-label="Lichess">♛</a>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal">
+        <div class="form-title">Send a Message</div>
+        <div class="form-sub">We'll reply within 24 hours</div>
+        <form id="contactForm" onsubmit="submitContact(event)" novalidate>
+          <div class="form-group">
+            <label for="cname">Your Name</label>
+            <input type="text" id="cname" name="name" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label for="cemail">Email</label>
+            <input type="email" id="cemail" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="csubject">Subject</label>
+            <input type="text" id="csubject" name="subject" placeholder="Course inquiry, pricing, etc.">
+          </div>
+          <div class="form-group">
+            <label for="cmessage">Message</label>
+            <textarea id="cmessage" name="message" style="height:120px"
+              placeholder="Tell us about yourself and how we can help..." required></textarea>
+          </div>
+          <button type="submit" id="contactSubmitBtn" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="chess-line" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">♚ Anis Chess Academy</span>
+        <p>World-class chess coaching for every level. Train smarter, play better, think deeper — from anywhere in the
+          world.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#courses">Beginner Course</a></li>
+          <li><a href="#courses">Intermediate Course</a></li>
+          <li><a href="#courses">Advanced Course</a></li>
+          <li><a href="#courses">1-on-1 Coaching</a></li>
+          <li><a href="#courses">Group Classes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="#about">About Anis</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#booking">Book Free Demo</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Anis Chess Academy. All rights reserved.</span>
+      <span>Designed for champions worldwide · <a href="#booking">Join the Academy</a></span>
+    </div>
+  </footer>
+
+  <!-- Toast notification container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    /* ─────────────────────────────────────────────────────────────────
+       ANIS CHESS ACADEMY — Frontend JS
+       All forms wired to Express backend API via fetch()
+    ───────────────────────────────────────────────────────────────── */
+
+    const API = ''; // same origin — server.js serves this HTML
+
+    /* ── Toast notifications ─────────────────────────────────────── */
+    function showToast(message, type = 'success', duration = 4000) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+      toast.innerHTML = `<span class="toast-icon">${icon}</span><span class="toast-msg">${message}</span>`;
+      container.appendChild(toast);
+      requestAnimationFrame(() => { toast.classList.add('show'); });
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, duration);
+    }
+
+    /* ── Set button loading state ─────────────────────────────────── */
+    function setLoading(btn, loading, originalText) {
+      if (loading) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="btn-spin"></span>Processing...`;
+      } else {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
+
+    /* ── Custom cursor ────────────────────────────────────────────── */
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursorFollower');
+    let mx = 0, my = 0, fx = 0, fy = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    });
+    document.querySelectorAll('a,button,.course-card,.feature-card,.gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; follower.style.width = '60px'; follower.style.height = '60px'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; follower.style.width = '40px'; follower.style.height = '40px'; });
+    });
+    (function animateCursor() {
+      fx += (mx - fx) * 0.12; fy += (my - fy) * 0.12;
+      follower.style.left = fx + 'px'; follower.style.top = fy + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    /* ── Nav scroll ───────────────────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    /* ── Mobile menu ──────────────────────────────────────────────── */
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('show');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+
+    /* ── Chess board background ───────────────────────────────────── */
+    (function () {
+      const grid = document.getElementById('chessGrid');
+      for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'chess-cell ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
+        grid.appendChild(cell);
+      }
+    })();
+
+    /* ── Scroll reveal ────────────────────────────────────────────── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ── Animated stat counters (fetched from backend) ────────────── */
+    function animateCounter(el, target, duration = 1800) {
+      const start = parseInt(el.textContent) || 0;
+      const startTime = performance.now();
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+        const value = Math.round(start + (target - start) * ease);
+        el.textContent = value + (el.dataset.suffix || '');
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/api/stats`);
+        const data = await res.json();
+        if (!data.success) return;
+        const s = data.stats;
+        // Update student count stat
+        const statNums = document.querySelectorAll('.stat-num');
+        statNums.forEach(el => {
+          const raw = el.textContent.replace(/[^0-9]/g, '');
+          const suffix = el.textContent.replace(/[0-9]/g, '');
+          el.dataset.suffix = suffix;
+          if (el.textContent.startsWith('500')) {
+            animateCounter(el, s.totalStudents);
+          }
+        });
+      } catch (_) {
+        // Server not running — stats stay as static HTML values
+      }
+    }
+    loadStats();
+
+    /* ── Booking form → POST /api/booking ────────────────────────── */
+    async function submitBooking(e) {
+      e.preventDefault();
+      const form = document.getElementById('bookingForm');
+      const btn = form.querySelector('.form-submit');
+      const origText = btn.textContent;
+
+      const body = {
+        fname: document.getElementById('fname').value.trim(),
+        lname: document.getElementById('lname').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        country: document.getElementById('country').value,
+        level: document.getElementById('level').value,
+        goals: document.getElementById('goals').value.trim(),
+      };
+
+      setLoading(btn, true, origText);
+
+      try {
+        const res = await fetch(`${API}/api/booking`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.style.display = 'none';
+          const msg = document.getElementById('successMsg');
+          msg.style.display = 'block';
+          msg.innerHTML = '✓ Booked! Anis will contact you within 24 hours.';
+          showToast('Demo session booked! Check your email.', 'success', 6000);
+        } else {
+          showToast(data.message || 'Something went wrong. Please try again.', 'error');
+          setLoading(btn, false, origText);
+        }
+      } catch (err) {
+        showToast('Network error — please check your connection.', 'error');
+        setLoading(btn, false, origText);
+      }
+    }
+
+    /* ── Contact form → POST /api/contact ────────────────────────── */
+    async function submitContact(e) {
+      e.preventDefault();
+      const form = document.getElementById('contactForm');
+      const btn = document.getElementById('contactSubmitBtn');
+      const origText = btn.textContent;
+
+      const body = {
+        name: document.getElementById('cname').value.trim(),
+        email: document.getElementById('cemail').value.trim(),
+        subject: document.getElementById('csubject').value.trim(),
+        message: document.getElementById('cmessage').value.trim(),
+      };
+
+      setLoading(btn, true, origText);
+
+      try {
+        const res = await fetch(`${API}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.innerHTML = `
+        <div style="text-align:center;padding:3rem 1rem">
+          <div style="font-size:3rem;margin-bottom:1rem">✓</div>
+          <div style="font-family:var(--font-display);font-size:1.5rem;color:var(--gold);margin-bottom:0.75rem">Message Sent!</div>
+          <div style="font-size:0.85rem;color:var(--white2);opacity:0.8;line-height:1.8">We'll reply within 24 hours.<br>Anis personally reads every message.</div>
+        </div>`;
+          showToast('Message received! We\'ll reply within 24 hours.', 'success', 6000);
+        } else {
+          showToast(data.message || 'Something went wrong. Please try again.', 'error');
+          setLoading(btn, false, origText);
+        }
+      } catch (err) {
+        showToast('Network error — please check your connection.', 'error');
+        setLoading(btn, false, origText);
+      }
+    }
+
+    /* ── Newsletter → POST /api/newsletter ───────────────────────── */
+    async function subscribeNewsletter() {
+      const inp = document.getElementById('nlEmail');
+      const btn = inp.nextElementSibling;
+      const email = inp.value.trim();
+
+      if (!email || !email.includes('@')) {
+        showToast('Please enter a valid email address.', 'error');
+        inp.focus();
+        return;
+      }
+
+      const origText = btn.textContent;
+      setLoading(btn, true, origText);
+
+      try {
+        const res = await fetch(`${API}/api/newsletter`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          inp.value = '';
+          inp.placeholder = '✓ Subscribed! Check your inbox.';
+          showToast('You\'re subscribed! Expect your first chess tip this week. ♟', 'success', 6000);
+        } else if (data.alreadySubscribed) {
+          showToast('You\'re already subscribed! Check your inbox for chess tips.', 'success');
+          inp.value = '';
+        } else {
+          showToast(data.message || 'Subscription failed. Please try again.', 'error');
+        }
+      } catch (err) {
+        showToast('Network error — please check your connection.', 'error');
+      } finally {
+        setLoading(btn, false, origText);
+      }
+    }
+
+    /* ── Interactive Chess Board ──────────────────────────────────── */
+    const initPos = [
+      ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
+      ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
+      ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'],
+    ];
+
+    let boardState = initPos.map(r => [...r]);
+    let selected = null;
+
+    function resetBoard() {
+      boardState = initPos.map(r => [...r]);
+      selected = null;
+      renderBoard();
+      document.getElementById('boardStatus').textContent = 'Click any piece to start';
+    }
+
+    function renderBoard() {
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell ' + ((r + c) % 2 === 0 ? 'white' : 'black');
+          cell.textContent = boardState[r][c];
+          cell.setAttribute('data-r', r);
+          cell.setAttribute('data-c', c);
+          if (selected && selected[0] === r && selected[1] === c) cell.classList.add('selected');
+          cell.addEventListener('click', () => handleCellClick(r, c));
+          board.appendChild(cell);
+        }
+      }
+    }
+
+    function handleCellClick(r, c) {
+      const piece = boardState[r][c];
+      if (selected) {
+        if (selected[0] === r && selected[1] === c) {
+          selected = null;
+          renderBoard();
+          document.getElementById('boardStatus').textContent = 'Click any piece to start';
+          return;
+        }
+        boardState[r][c] = boardState[selected[0]][selected[1]];
+        boardState[selected[0]][selected[1]] = '';
+        selected = null;
+        renderBoard();
+        document.getElementById('boardStatus').textContent = 'Move made! Click another piece.';
+      } else if (piece) {
+        selected = [r, c];
+        renderBoard();
+        document.getElementById('boardStatus').textContent = 'Selected ' + piece + ' — click a square to move';
+      }
+    }
+    renderBoard();
+  </script>
+</body>
+
+</html>

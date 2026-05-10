@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ddcafc65-a573-408a-ab57-18c5ab7bb97a",
+    "fname": "Test",
+    "lname": "User",
+    "email": "test@example.com",
+    "country": "India",
+    "level": "Intermediate (800–1500)",
+    "goals": "Improve my endgame",
+    "status": "pending",
+    "bookedAt": "2026-05-10T10:48:19.162Z"
+  },
+  {
+    "id": "e5313efa-97f4-4fc1-91b6-c00e4beaa700",
+    "fname": "Shibly",
+    "lname": "Anis",
+    "email": "siblyanis@gmail.com",
+    "country": "India",
+    "level": "Complete Beginner",
+    "goals": "Test",
+    "status": "pending",
+    "bookedAt": "2026-05-10T11:01:19.416Z"
+  }
+]

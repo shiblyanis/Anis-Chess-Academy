@@ -1,0 +1,11 @@
+[
+  {
+    "id": "e5bda626-7bfb-4164-86a3-467d1d4003ae",
+    "name": "Jane Doe",
+    "email": "jane@test.com",
+    "subject": "Pricing inquiry",
+    "message": "I'd like to know about group class pricing for beginners.",
+    "read": false,
+    "sentAt": "2026-05-10T10:49:28.416Z"
+  }
+]
